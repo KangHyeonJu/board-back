@@ -1,7 +1,7 @@
 package com.hyeonju.boardback.auth;
 
 import com.hyeonju.boardback.entity.Member;
-import com.hyeonju.boardback.reposiroty.MemberRepository;
+import com.hyeonju.boardback.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

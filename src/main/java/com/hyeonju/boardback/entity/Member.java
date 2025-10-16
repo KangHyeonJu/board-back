@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Setter
@@ -16,6 +16,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
     private String password;

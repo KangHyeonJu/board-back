@@ -39,6 +39,7 @@ public class AuthController {
 
             // 3) JWT 생성
             String token = jwtService.createToken(username, roles);
+            System.out.println("token: " + token);
 
             // 4) 헤더로 반환 (+ CORS 노출)
             return ResponseEntity.ok()
