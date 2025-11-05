@@ -1,14 +1,16 @@
 package com.hyeonju.boardback.dto;
 
 import com.hyeonju.boardback.entity.Board;
+import com.hyeonju.boardback.entity.Member;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.modelmapper.ModelMapper;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class BoardDTO {
     //게시물 id
     private Long boardId;
@@ -20,7 +22,7 @@ public class BoardDTO {
     private String content;
 
     //작성자
-    private String writer;
+    private Member member;
 
     //등록일
     private LocalDate regDate;
@@ -29,11 +31,17 @@ public class BoardDTO {
     private LocalDate modDate;
 
     //조회수
-    private Long views;
+    private Long viewCnt;
 
-    private static ModelMapper modelMapper = new ModelMapper();
-
-    public static BoardDTO boardToDTO(Board board) {
-        return modelMapper.map(board, BoardDTO.class);
+    public static BoardDTO from(Board board) {
+        return new BoardDTO(
+                board.getId(),
+                board.getTitle(),
+                board.getContent(),
+                board.getMember(),
+                board.getRegDate(),
+                board.getModDate(),
+                board.getViewCnt()
+        );
     }
 }

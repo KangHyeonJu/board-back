@@ -26,7 +26,7 @@ public class BoardService {
     //게시물 등록
     @Transactional
     public Long newBoard(NewBoardDTO boardDto) {
-        Board newBoard = boardDto.newBoard();
+        Board newBoard = NewBoardDTO.to(boardDto);
 
         Board board = boardRepository.save(newBoard);
         return board.getId();
@@ -36,7 +36,7 @@ public class BoardService {
     public List<BoardDTO> boardList() {
         List<Board> boardList = boardRepository.findAllByOrderByIdDesc();
 
-        return boardList.stream().map(BoardDTO::boardToDTO).toList();
+        return boardList.stream().map(BoardDTO::from).toList();
     }
 
     //게시물 목록조회 페이징
@@ -44,7 +44,7 @@ public class BoardService {
         Pageable pageable = PageRequest.of(page, size);
         Page<Board> boardList = boardRepository.findAllByOrderByIdDesc(pageable);
 
-        List<BoardDTO> boardDTOList = boardList.stream().map(BoardDTO::boardToDTO).toList();
+        List<BoardDTO> boardDTOList = boardList.stream().map(BoardDTO::from).toList();
 
         Map<String, Object> response = new LinkedHashMap<>();
         response.put("content", boardDTOList);
@@ -66,7 +66,7 @@ public class BoardService {
             boardRepository.save(board);
         }
 
-        return BoardDTO.boardToDTO(board);
+        return BoardDTO.from(board);
     }
 
     //게시물 수정

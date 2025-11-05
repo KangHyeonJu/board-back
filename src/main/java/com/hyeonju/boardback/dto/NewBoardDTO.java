@@ -1,11 +1,11 @@
 package com.hyeonju.boardback.dto;
 
 import com.hyeonju.boardback.entity.Board;
+import com.hyeonju.boardback.entity.Member;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
-import org.modelmapper.ModelMapper;
 
 import java.time.LocalDate;
 
@@ -23,17 +23,17 @@ public class NewBoardDTO {
     private String content;
 
     //작성자
-//    private String writer;
+    private Member member;
 
     //등록일
     private LocalDate regDate = LocalDate.now();
 
-    //조회수
-    private Long viewCnt = 0L;
-
-    private static ModelMapper modelMapper = new ModelMapper();
-
-    public Board newBoard() {
-        return modelMapper.map(this, Board.class);
+    public static Board to(NewBoardDTO dto) {
+        return new Board(
+                dto.getTitle(),
+                dto.getContent(),
+                dto.getMember(),
+                dto.getRegDate()
+        );
     }
 }

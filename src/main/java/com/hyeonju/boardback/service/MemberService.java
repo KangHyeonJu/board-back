@@ -1,5 +1,6 @@
 package com.hyeonju.boardback.service;
 
+import com.hyeonju.boardback.constant.Role;
 import com.hyeonju.boardback.dto.MemberDto;
 import com.hyeonju.boardback.entity.Member;
 import com.hyeonju.boardback.handler.DuplicateEmailException;
@@ -20,10 +21,10 @@ public class MemberService {
         if(memberRepository.existsByEmail(memberDto.getEmail())){
             throw new DuplicateEmailException(memberDto.getEmail());
         }
-        Member newMember = memberDto.newMember();
-
         String encodedPassword = passwordEncoder.encode(memberDto.getPassword());
-        newMember.setPassword(encodedPassword);
+        Role defaultRole = Role.USER;
+
+        Member newMember = MemberDto.to(memberDto, encodedPassword, defaultRole);
 
         memberRepository.save(newMember);
         return newMember.getId();
