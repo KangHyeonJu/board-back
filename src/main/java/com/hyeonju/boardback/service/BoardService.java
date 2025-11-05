@@ -4,7 +4,9 @@ import com.hyeonju.boardback.dto.BoardDTO;
 import com.hyeonju.boardback.dto.NewBoardDTO;
 import com.hyeonju.boardback.dto.UpdateBoardDTO;
 import com.hyeonju.boardback.entity.Board;
+import com.hyeonju.boardback.entity.Member;
 import com.hyeonju.boardback.repository.BoardRepository;
+import com.hyeonju.boardback.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +24,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final MemberRepository memberRepository;
 
     //게시물 등록
     @Transactional
     public Long newBoard(NewBoardDTO boardDto) {
-        Board newBoard = NewBoardDTO.to(boardDto);
+        Member member = memberRepository.findById(boardDto.getMemberId()).orElseThrow(EntityNotFoundException::new);
+        Board newBoard = NewBoardDTO.toEntity(boardDto,  member);
 
         Board board = boardRepository.save(newBoard);
         return board.getId();

@@ -23,16 +23,16 @@ public class NewBoardDTO {
     private String content;
 
     //작성자
-    private Member member;
+    private Long memberId;
 
     //등록일
     private LocalDate regDate = LocalDate.now();
 
-    public static Board to(NewBoardDTO dto) {
+    public static Board toEntity(NewBoardDTO dto, Member member) {
         return new Board(
                 dto.getTitle(),
                 dto.getContent(),
-                dto.getMember(),
+                member,
                 dto.getRegDate()
         );
     }

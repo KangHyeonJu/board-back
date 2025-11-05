@@ -1,7 +1,6 @@
 package com.hyeonju.boardback.dto;
 
 import com.hyeonju.boardback.entity.Board;
-import com.hyeonju.boardback.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +21,7 @@ public class BoardDTO {
     private String content;
 
     //작성자
-    private Member member;
+    private String nickname;
 
     //등록일
     private LocalDate regDate;
@@ -38,7 +37,7 @@ public class BoardDTO {
                 board.getId(),
                 board.getTitle(),
                 board.getContent(),
-                board.getMember(),
+                board.getMember().getNickname(),
                 board.getRegDate(),
                 board.getModDate(),
                 board.getViewCnt()
